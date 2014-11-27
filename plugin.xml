@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="com.dcrichards.pebble.PebbleKitCordova"
+      version="0.1.0">
+    <name>PebbleKit Cordova</name>
+    <description>Cordova plugin for Pebble Smartwatch SDK</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,pebble</keywords>
+
+    <js-module src="www/android/pebbleKitCordova.js" name="pebbleKitCordova">
+        <clobbers target="pebbleKitCordova" />
+    </js-module>
+
+    <!-- android platform -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="PebbleKitCordova">
+                <param name="android-package" value="com.dcrichards.pebble.pebbleKitCordova.PebbleKitCordova"/>
+            </feature>
+        </config-file>
+        <source-file src="src/android/PebbleKitCordova.java" target-dir="src/com/dcrichards/pebble/pebbleKitCordova" />
+        <source-file src="src/android/libs/pebblekit-2.6.0.jar" target-dir="libs" />
+    </platform>
+</plugin>
