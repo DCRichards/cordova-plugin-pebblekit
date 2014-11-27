@@ -8,7 +8,7 @@ I am aware that there already number of [similar efforts](https://github.com/kon
 
 Run the following from your Cordova project directory:
 
-	cordova plugin add com.dcrichards.pebble.pebbleKitCordova
+	cordova plugin add https://github.com/DCRichards/cordova-plugin-pebblekit.git
 		
 ## API
 
