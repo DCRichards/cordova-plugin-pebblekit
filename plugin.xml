@@ -20,5 +20,6 @@
         </config-file>
         <source-file src="src/android/PebbleKitCordova.java" target-dir="src/com/dcrichards/pebble/pebbleKitCordova" />
         <source-file src="src/android/libs/pebblekit-2.6.0.jar" target-dir="libs" />
+        <source-file src="src/android/libs/guava-18.0.jar" target-dir="libs" />
     </platform>
 </plugin>
