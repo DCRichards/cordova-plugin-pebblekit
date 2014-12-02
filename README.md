@@ -25,7 +25,14 @@ Pebble.getWatchFWVersion(function(version) {
 The following have been implemented. See [PebbleKit Documentation](http://developer.getpebble.com/docs/android) for details:
 
 * getWatchFWVersion()
+* registerDataLoggingReceiver()
+* unregisterDataLoggingReceiver()
 
 ## Notes
 
+### Data Logging
+
+At present data logging only supports __byte arrays__, I hope to implement a solution for [other data types](http://developer.getpebble.com/docs/android/com/getpebble/android/kit/PebbleKit.PebbleDataLogReceiver/) soon.
+
+### Platforms 
 Currently, only __android__ is supported.
