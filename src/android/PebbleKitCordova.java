@@ -52,17 +52,21 @@ public class PebbleKitCordova extends CordovaPlugin {
         }
 
         if (action.equals("registerDataLoggingReceiver")) {
+            //TODO: Pass in UUID
+            //TODO: How do we make this async? Fire a JS event through WebView
             dataLoggingReceiver = new PebbleDataLogReceiver(APP_ID) {
 
                 @Override
-                public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, int data) {
-                    //TODO: store data
+                public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, byte[] data) {
+                    // we need to convert this byte array into the x, y and z data
+                    // then store it in a JSON object to send back to the
+                    // success call
                 }
 
                 @Override
                 public void onFinishSession(Context context, UUID logUuid, Long timestamp, Long tag) {
                     super.onFinishSession(context, logUuid, timestamp, tag);
-                    //TODO: call callback which returns data
+                    // call callback which returns the JSON data
                 }
             };
             PebbleKit.registerDataLogReceiver(getApplicationContext(), dataLoggingReceiver);
