@@ -24,6 +24,13 @@ public class PebbleKitCordova extends CordovaPlugin {
     private static final UUID APP_ID = UUID.fromString("APP_UUID_HERE");
 
     /**
+     * Constructor
+     */
+    public PebbleKitCordova() {
+
+    }
+
+    /**
      * Get the current application context
      *
      * @return application context
