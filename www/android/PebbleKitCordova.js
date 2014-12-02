@@ -23,8 +23,7 @@ window.Pebble.getWatchFWVersion = function(succ, error) {
  * @param error the error callback
  */
 window.Pebble.registerDataLoggingReceiver = function(succ, error) {
-    console.log('To be implemented...');
-    //cordova.exec(succ, error, 'PebbleKitCordova', 'registerDataLoggingReceiver');
+    cordova.exec(succ, error, 'PebbleKitCordova', 'registerDataLoggingReceiver');
 };
 
 /**
@@ -34,6 +33,5 @@ window.Pebble.registerDataLoggingReceiver = function(succ, error) {
  * @param error the error callback
  */
 window.Pebble.unregisterDataLoggingReceiver = function(succ, error) {
-    console.log('To be implemented...');
-    //cordova.exec(succ, error, 'PebbleKitCordova', 'unregisterDataLoggingReceiver');
+    cordova.exec(succ, error, 'PebbleKitCordova', 'unregisterDataLoggingReceiver');
 };

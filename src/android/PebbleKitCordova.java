@@ -2,6 +2,7 @@ package com.dcrichards.pebble.pebbleKitCordova;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
 
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.PebbleKit.PebbleDataLogReceiver;
@@ -20,14 +21,14 @@ import java.util.UUID;
  */
 public class PebbleKitCordova extends CordovaPlugin {
 
-    PebbleDataLogReceiver dataLoggingReceiver;
+    private PebbleDataLogReceiver dataLoggingReceiver;
+    private CallbackContext currentCallbackContext;
     private static final UUID APP_ID = UUID.fromString("APP_UUID_HERE");
 
     /**
      * Constructor
      */
     public PebbleKitCordova() {
-
     }
 
     /**
@@ -59,21 +60,26 @@ public class PebbleKitCordova extends CordovaPlugin {
         }
 
         if (action.equals("registerDataLoggingReceiver")) {
-            //TODO: Pass in UUID
-            //TODO: How do we make this async? Fire a JS event through WebView
+            //store callback context for asynchronous communication
+            currentCallbackContext = callbackContext;
+
             dataLoggingReceiver = new PebbleDataLogReceiver(APP_ID) {
+                private JSONArray loggedData = new JSONArray();
 
                 @Override
                 public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, byte[] data) {
-                    // we need to convert this byte array into the x, y and z data
-                    // then store it in a JSON object to send back to the
-                    // success call
+                    // for now we're just going to put the data, we'll format later
+                    loggedData.put(data);
                 }
 
                 @Override
                 public void onFinishSession(Context context, UUID logUuid, Long timestamp, Long tag) {
                     super.onFinishSession(context, logUuid, timestamp, tag);
-                    // call callback which returns the JSON data
+                    // using PluginResult with setKeepCallback(true) and storing
+                    // the context allows the callback to be called asynchronously
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, loggedData);
+                    result.setKeepCallback(true);
+                    currentCallbackContext.sendPluginResult(result);
                 }
             };
             PebbleKit.registerDataLogReceiver(getApplicationContext(), dataLoggingReceiver);
@@ -89,7 +95,6 @@ public class PebbleKitCordova extends CordovaPlugin {
             }
             return true;
         }
-
         return false;
     }
 }
