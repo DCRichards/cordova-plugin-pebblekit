@@ -89,6 +89,7 @@ public class PebbleKitCordova extends CordovaPlugin {
         if (action.equals("unregisterDataLoggingReceiver")) {
             if (dataLoggingReceiver != null) {
                 getApplicationContext().unregisterReceiver(dataLoggingReceiver);
+                dataLoggingReceiver = null;
                 callbackContext.success();
             } else {
                 callbackContext.error("Receiver not registered");
