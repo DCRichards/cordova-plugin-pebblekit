@@ -1,5 +1,6 @@
 package com.dcrichards.pebble.pebbleKitCordova;
 
+import android.util.Base64;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -8,6 +9,7 @@ import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.PebbleKit.PebbleDataLogReceiver;
 
 import android.content.Context;
+import android.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,8 +75,14 @@ public class PebbleKitCordova extends CordovaPlugin {
 
                 @Override
                 public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, byte[] data) {
-                    // for now we're just going to put the data as a string, we'll format later
-                    loggedData.put(data);
+                    // Encode to preserve byte array
+                    String bytes = Base64.encodeToString(data, 0);
+                    loggedData.put(bytes);
+                }
+
+                @Override
+                public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, int data) {
+                    
                 }
 
                 @Override
