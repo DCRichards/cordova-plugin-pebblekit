@@ -74,7 +74,7 @@ public class PebbleKitCordova extends CordovaPlugin {
                 @Override
                 public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, byte[] data) {
                     // for now we're just going to put the data as a string, we'll format later
-                    loggedData.put(data.toString());
+                    loggedData.put(data);
                 }
 
                 @Override
