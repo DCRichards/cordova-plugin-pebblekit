@@ -75,14 +75,14 @@ public class PebbleKitCordova extends CordovaPlugin {
 
                 @Override
                 public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, byte[] data) {
-                    // Encode to preserve byte array
+                    // encode to preserve byte array
                     String bytes = Base64.encodeToString(data, 0);
                     loggedData.put(bytes);
                 }
 
                 @Override
                 public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, int data) {
-                    
+                    //TODO: handle int data logging
                 }
 
                 @Override
