@@ -22,8 +22,8 @@ window.Pebble.getWatchFWVersion = function(succ, error) {
  * @param succ  the success callback
  * @param error the error callback
  */
-window.Pebble.registerDataLoggingReceiver = function(succ, error) {
-    cordova.exec(succ, error, 'PebbleKitCordova', 'registerDataLoggingReceiver', []);
+window.Pebble.registerDataLoggingReceiver = function(UUID, succ, error) {
+    cordova.exec(succ, error, 'PebbleKitCordova', 'registerDataLoggingReceiver', [UUID]);
 };
 
 /**

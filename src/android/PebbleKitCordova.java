@@ -23,7 +23,6 @@ public class PebbleKitCordova extends CordovaPlugin {
 
     private PebbleDataLogReceiver dataLoggingReceiver;
     private CallbackContext currentCallbackContext;
-    private static final UUID APP_ID = UUID.fromString("APP_UUID_HERE");
 
     /**
      * Constructor
@@ -51,6 +50,9 @@ public class PebbleKitCordova extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
+        /**
+         * Get the current watch version as a version tag eg. v2.6
+         */
         if (action.equals("getWatchFWVersion")) {
             PebbleKit.FirmwareVersionInfo pebbleFirmwareVersion = PebbleKit.getWatchFWVersion(this.getApplicationContext());
             JSONObject versionInfo = new JSONObject();
@@ -59,17 +61,20 @@ public class PebbleKitCordova extends CordovaPlugin {
             return true;
         }
 
+        /**
+         * Register a callback for data logging
+         */
         if (action.equals("registerDataLoggingReceiver")) {
-            //store callback context for asynchronous communication
             currentCallbackContext = callbackContext;
+            UUID appUUID = UUID.fromString(args.getString(0));
 
-            dataLoggingReceiver = new PebbleDataLogReceiver(APP_ID) {
+            dataLoggingReceiver = new PebbleDataLogReceiver(appUUID) {
                 private JSONArray loggedData = new JSONArray();
 
                 @Override
                 public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, byte[] data) {
-                    // for now we're just going to put the data, we'll format later
-                    loggedData.put(data);
+                    // for now we're just going to put the data as a string, we'll format later
+                    loggedData.put(data.toString());
                 }
 
                 @Override
@@ -86,13 +91,16 @@ public class PebbleKitCordova extends CordovaPlugin {
             return true;
         }
 
+        /**
+         * Unregister a data logging callback
+         */
         if (action.equals("unregisterDataLoggingReceiver")) {
             if (dataLoggingReceiver != null) {
                 getApplicationContext().unregisterReceiver(dataLoggingReceiver);
                 dataLoggingReceiver = null;
                 callbackContext.success();
             } else {
-                callbackContext.error("Receiver not registered");
+                callbackContext.error("No registered receiver found");
             }
             return true;
         }
