@@ -19,6 +19,7 @@ window.Pebble.getWatchFWVersion = function(succ, error) {
 /**
  * Register a data logging reciever to receieve logged data from Pebble
  *
+ * @param UUID  the UUID of the pebble app
  * @param succ  the success callback
  * @param error the error callback
  */
