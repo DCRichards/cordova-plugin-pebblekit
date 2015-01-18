@@ -2,7 +2,7 @@
 
 A plugin for Apache Cordova for integration with PebbleKit SDK for the [Pebble Smartwatch](http://developer.getpebble.com/).
 
-I am aware that there already number of [similar efforts](https://github.com/konsumer/phonegap-pebble), but none I have encountered so far have successfully implemented [data logging](http://developer.getpebble.com/guides/pebble-apps/communications/pebble-datalogging/), thus the first goal of this is to do just that.
+I am aware that there are already a number of [similar efforts](https://github.com/konsumer/phonegap-pebble), but none I have encountered so far have successfully implemented [data logging](http://developer.getpebble.com/guides/pebble-apps/communications/pebble-datalogging/), thus the first goal of this is to do just that.
 
 ## Installation
 
@@ -27,6 +27,7 @@ The following have been implemented. See [PebbleKit Documentation](http://develo
 * getWatchFWVersion()
 * registerDataLoggingReceiver()
 * unregisterDataLoggingReceiver()
+* requestDataLogsForApp()
 
 ## Notes
 
