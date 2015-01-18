@@ -82,7 +82,7 @@ public class PebbleKitCordova extends CordovaPlugin {
 
                 @Override
                 public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, int data) {
-                    //TODO: handle int data logging
+                    loggedData.put(data);
                 }
 
                 @Override
