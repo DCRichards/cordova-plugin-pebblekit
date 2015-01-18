@@ -36,3 +36,14 @@ window.Pebble.registerDataLoggingReceiver = function(UUID, succ, error) {
 window.Pebble.unregisterDataLoggingReceiver = function(succ, error) {
     cordova.exec(succ, error, 'PebbleKitCordova', 'unregisterDataLoggingReceiver', []);
 };
+
+/**
+ * Request the data logs for an application (requires a receiver to be registered)
+ *
+ * @param UUID  the UUID of the pebble app
+ * @param succ  the success callback
+ * @param error the error callback
+ */
+window.Pebble.requestDataLogsForApp = function(UUID, succ, error) {
+    cordova.exec(succ, error, 'PebbleKitCordova', 'requestDataLogsForApp', [UUID]);
+};

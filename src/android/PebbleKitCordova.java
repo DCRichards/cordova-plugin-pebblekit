@@ -112,6 +112,21 @@ public class PebbleKitCordova extends CordovaPlugin {
             }
             return true;
         }
+        
+        /**
+         * Request current data logs
+        **/
+        if (action.equals("requestDataLogsForApp")) {
+            if (dataLoggingReceiver != null) {
+                UUID appUUID = UUID.fromString(args.getString(0));
+                PebbleKit.requestDataLogsForApp(getApplicationContext(), appUUID);
+                callbackContext.success();
+            } else {
+                callbackContext.error("No registered data logging receiver found");
+            }
+            return true;
+        }
+        
         return false;
     }
 }
