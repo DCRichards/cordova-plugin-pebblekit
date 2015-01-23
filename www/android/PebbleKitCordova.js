@@ -17,6 +17,16 @@ window.Pebble.getWatchFWVersion = function(succ, error) {
 };
 
 /**
+ * Check if the currently connected Pebble supports app messages
+ *
+ * @param succ  the success callback
+ * @param error the error callback
+ */
+window.Pebble.areAppMessagesSupported = function(succ, error) {
+    cordova.exec(succ, error, 'PebbleKitCordova', 'areAppMessagesSupported', []);
+};
+
+/**
  * Register a data logging reciever to receieve logged data from Pebble
  *
  * @param UUID  the UUID of the pebble app

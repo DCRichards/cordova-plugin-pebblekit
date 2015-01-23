@@ -28,12 +28,17 @@ The following have been implemented. See [PebbleKit Documentation](http://develo
 * registerDataLoggingReceiver()
 * unregisterDataLoggingReceiver()
 * requestDataLogsForApp()
+* areAppMessagesSupported()
 
 ## Notes
 
 ### Data Logging
 
-At present data logging only supports __byte arrays__, I hope to implement a solution for [other data types](http://developer.getpebble.com/docs/android/com/getpebble/android/kit/PebbleKit.PebbleDataLogReceiver/) soon.
+At present, data logging returns byte and integer data, the methods for interpreting and using this data will be elaborated on soon.
 
 ### Platforms 
 Currently, only __android__ is supported.
+
+## Issues & Extensions
+
+If you find a problem or have improvement suggestions then raise and issue or send a pull request

@@ -13,6 +13,8 @@ import android.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.nio.ByteBuffer;
 import java.util.UUID;
 
 /**
@@ -62,6 +64,17 @@ public class PebbleKitCordova extends CordovaPlugin {
             callbackContext.success(versionInfo);
             return true;
         }
+        
+        /**
+         * Check it the current watch is running a version which supports app messages
+         **/
+        if (action.equals("areAppMessagesSupported")) {
+            JSONObject appMessageInfo = new JSONObject();
+            boolean appMessageSupported = PebbleKit.areAppMessagesSupported(this.getApplicationContext());
+            appMessageInfo.put("supported", appMessageSupported);
+            callbackContext.success(appMessageInfo);
+            return true;
+        }
 
         /**
          * Register a callback for data logging
@@ -75,9 +88,7 @@ public class PebbleKitCordova extends CordovaPlugin {
 
                 @Override
                 public void receiveData(Context context, UUID logUuid, Long timestamp, Long tag, byte[] data) {
-                    // encode to preserve byte array
-                    String bytes = Base64.encodeToString(data, 0);
-                    loggedData.put(bytes);
+                    loggedData.put(data);
                 }
 
                 @Override
