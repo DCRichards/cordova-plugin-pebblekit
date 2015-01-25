@@ -29,8 +29,32 @@ The following have been implemented. See [PebbleKit Documentation](http://develo
 * unregisterDataLoggingReceiver()
 * requestDataLogsForApp()
 * areAppMessagesSupported()
+* startAppOnPebble()
+* sendDataToPebble()
+* sendDataToPebbleWithTransactionId()
+* startAppOnPebble()
 
 ## Notes
+
+### Message Formats
+
+Credit to those in [this thread](http://forums.getpebble.com/discussion/15538/android-pebbledictionary-fromjson) for this super helpful insight. Messages (for example when using Pebble.sendDataToPebble()) must be in the following JSON format:
+
+    {
+        "key":5,
+        "value":"myString",
+        "type":"string",
+        "length":0
+    }
+    
+Another example with an integer as the value:
+
+    {
+        "key":4,
+        "value":2,
+        "type":"unit",
+        "length":1
+    }
 
 ### Data Logging
 

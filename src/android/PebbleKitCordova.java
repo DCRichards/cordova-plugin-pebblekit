@@ -1,6 +1,7 @@
 package com.dcrichards.pebble.pebbleKitCordova;
 
 import android.util.Base64;
+import com.getpebble.android.kit.util.PebbleDictionary;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
@@ -73,6 +74,40 @@ public class PebbleKitCordova extends CordovaPlugin {
             boolean appMessageSupported = PebbleKit.areAppMessagesSupported(this.getApplicationContext());
             appMessageInfo.put("supported", appMessageSupported);
             callbackContext.success(appMessageInfo);
+            return true;
+        }
+
+        /**
+         * Send a message to the Pebble
+         */
+        if (action.equals("sendDataToPebble")) {
+            UUID appUUID = UUID.fromString(args.getString(0));
+            PebbleDictionary messageData = PebbleDictionary.fromJson(args.getString(1));
+            PebbleKit.sendDataToPebble(this.getApplicationContext(), appUUID, messageData);
+            callbackContext.success();
+            return true;
+        }
+
+        /**
+         * Send a message to the Pebble with a given transaction ID
+         */
+        if (action.equals("sendDataToPebbleWithTransactionId")) {
+            UUID appUUID = UUID.fromString(args.getString(0));
+            PebbleDictionary messageData;
+            smessageData = PebbleDictionary.fromJson(args.getString(1));
+            int transactionId = args.getInt(2);
+            PebbleKit.sendDataToPebbleWithTransactionId(this.getApplicationContext(), appUUID, messageData, transactionId);
+            callbackContext.success();
+            return true;
+        }
+
+        /**
+         * Start a specified app on the Pebble
+         */
+        if (action.equals("startAppOnPebble")) {
+            UUID appUUID = UUID.fromString(args.getString(0));
+            PebbleKit.startAppOnPebble(this.getApplicationContext(), appUUID);
+            callbackContext.success();
             return true;
         }
 
