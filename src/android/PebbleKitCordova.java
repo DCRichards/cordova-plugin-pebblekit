@@ -94,7 +94,7 @@ public class PebbleKitCordova extends CordovaPlugin {
         if (action.equals("sendDataToPebbleWithTransactionId")) {
             UUID appUUID = UUID.fromString(args.getString(0));
             PebbleDictionary messageData;
-            smessageData = PebbleDictionary.fromJson(args.getString(1));
+            messageData = PebbleDictionary.fromJson(args.getString(1));
             int transactionId = args.getInt(2);
             PebbleKit.sendDataToPebbleWithTransactionId(this.getApplicationContext(), appUUID, messageData, transactionId);
             callbackContext.success();

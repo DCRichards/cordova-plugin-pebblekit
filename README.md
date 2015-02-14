@@ -38,23 +38,25 @@ The following have been implemented. See [PebbleKit Documentation](http://develo
 
 ### Message Formats
 
-Credit to those in [this thread](http://forums.getpebble.com/discussion/15538/android-pebbledictionary-fromjson) for this super helpful insight. App msessages must be in the following JSON format:
+Credit to those in [this thread](http://forums.getpebble.com/discussion/15538/android-pebbledictionary-fromjson) for this super helpful insight. The format for sending app messages is extremely specific and must include the correct metadata and be passed as a __JSON array__. For example:
 
-    {
+    [{
         "value":"myString",
         "length":0,
         "type":"string",
         "key":5
-    }
+    }]
     
 Another example with an integer as the value:
 
-    {
+    [{
         "value":2,
         "length":1,
         "type":"unit",
         "key":4
-    }
+    }]
+    
+The message must then be passed as a string using _JSON.stringify()_.
 
 ### Data Logging
 
