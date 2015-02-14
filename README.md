@@ -41,19 +41,19 @@ The following have been implemented. See [PebbleKit Documentation](http://develo
 Credit to those in [this thread](http://forums.getpebble.com/discussion/15538/android-pebbledictionary-fromjson) for this super helpful insight. App msessages must be in the following JSON format:
 
     {
-        "key":5,
         "value":"myString",
+        "length":0,
         "type":"string",
-        "length":0
+        "key":5
     }
     
 Another example with an integer as the value:
 
     {
-        "key":4,
         "value":2,
+        "length":1,
         "type":"unit",
-        "length":1
+        "key":4
     }
 
 ### Data Logging
