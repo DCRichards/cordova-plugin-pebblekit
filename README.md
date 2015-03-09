@@ -21,6 +21,7 @@ Pebble.getWatchFWVersion(function(version) {
 	console.log('An error occured: ' + error);
 });
 ```
+#### PebbleKit API
 
 The following have been implemented. See [PebbleKit Documentation](http://developer.getpebble.com/docs/android) for details:
 
@@ -32,6 +33,12 @@ The following have been implemented. See [PebbleKit Documentation](http://develo
 * startAppOnPebble()
 * sendDataToPebble()
 * sendDataToPebbleWithTransactionId()
+
+#### Extended API
+
+Methods such as _sendDataToPebble_ allow the sending of various data types. For easier integration with cordova applications, the following convenience methods have been provided on top of the core API:
+
+* sendBytesToPebble()
 
 ## Notes
 
@@ -66,4 +73,4 @@ Currently, only __android__ is supported.
 
 ## Issues & Extensions
 
-If you find a problem or have improvement suggestions then raise and issue or send a pull request
+If you find a problem or have improvement suggestions then raise and issue or send a pull request.

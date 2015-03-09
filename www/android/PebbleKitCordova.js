@@ -26,7 +26,6 @@ window.Pebble.areAppMessagesSupported = function(succ, error) {
     cordova.exec(succ, error, 'PebbleKitCordova', 'areAppMessagesSupported', []);
 };
 
-
 /**
  * Start an app on the Pebble
  *
@@ -48,6 +47,19 @@ window.Pebble.startAppOnPebble = function(UUID, succ, error) {
  */
 window.Pebble.sendDataToPebble = function(UUID, message, succ, error) {
     cordova.exec(succ, error, 'PebbleKitCordova', 'sendDataToPebble', [UUID, message]);
+};
+
+/**
+ * Send a byte array to a specific pebble app
+ *
+ * @param UUID      the UUID of the pebble app
+ * @param key       the key to use in the Pebble Dictionary
+ * @param byteArray the data to send (byte array)
+ * @param succ      the success callback
+ * @param error     the error callback
+ */
+window.Pebble.sendBytesToPebble = function(UUID, key, byteArray, succ, error) {
+    cordova.exec(succ, error, 'PebbleKitCordova', 'sendBytesToPebble', [UUID, key, byteArray]);
 };
 
 /**

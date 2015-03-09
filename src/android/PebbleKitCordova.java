@@ -102,6 +102,24 @@ public class PebbleKitCordova extends CordovaPlugin {
         }
 
         /**
+         * Send a byte array to the Pebble
+         */
+        if (action.equals("sendBytesToPebble")) {
+            UUID appUUID = UUID.fromString(args.getString(0));
+            PebbleDictionary dict = new PebbleDictionary();
+            int key = args.getInt(1);
+            JSONArray bytes = args.getJSONArray(2);
+            byte[] byteArray = new byte[bytes.length()];
+            for (int i = 0; i < bytes.length(); i++) {
+                byteArray[i] = (byte)bytes.getInt(i);
+            }
+            dict.addBytes(key,byteArray);
+            PebbleKit.sendDataToPebble(this.getApplicationContext(), appUUID, dict);
+            callbackContext.success();
+            return true;
+        }
+
+        /**
          * Start a specified app on the Pebble
          */
         if (action.equals("startAppOnPebble")) {
