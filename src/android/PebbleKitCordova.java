@@ -28,7 +28,9 @@ public class PebbleKitCordova extends CordovaPlugin {
     private PebbleDataLogReceiver dataLoggingReceiver;
     private PebbleAckReceiver ackReceiver;
     private PebbleNackReceiver nackReceiver;
-    private CallbackContext currentCallbackContext;
+    private CallbackContext dataLoggingCallbackContext;
+    private CallbackContext messageAckCallbackContext;
+    private CallbackContext messageNackCallbackContext;
 
     /**
      * Constructor
@@ -134,7 +136,7 @@ public class PebbleKitCordova extends CordovaPlugin {
          * Register a callback for data logging
          */
         if (action.equals("registerDataLoggingReceiver")) {
-            currentCallbackContext = callbackContext;
+            dataLoggingCallbackContext = callbackContext;
             UUID appUUID = UUID.fromString(args.getString(0));
 
             dataLoggingReceiver = new PebbleDataLogReceiver(appUUID) {
@@ -157,7 +159,7 @@ public class PebbleKitCordova extends CordovaPlugin {
                     // the context allows the callback to be called asynchronously
                     PluginResult result = new PluginResult(PluginResult.Status.OK, loggedData);
                     result.setKeepCallback(true);
-                    currentCallbackContext.sendPluginResult(result);
+                    dataLoggingCallbackContext.sendPluginResult(result);
                 }
             };
             PebbleKit.registerDataLogReceiver(getApplicationContext(), dataLoggingReceiver);
@@ -196,7 +198,7 @@ public class PebbleKitCordova extends CordovaPlugin {
          * Register a handler for ACK messages
          */
         if (action.equals("registerReceivedAckHandler")) {
-            currentCallbackContext = callbackContext;
+            messageAckCallbackContext = callbackContext;
             UUID appUUID = UUID.fromString(args.getString(0));
             ackReceiver = new PebbleAckReceiver(appUUID) {
 
@@ -204,7 +206,7 @@ public class PebbleKitCordova extends CordovaPlugin {
                 public void receiveAck(Context context, int transactionId) {
                     PluginResult result = new PluginResult(PluginResult.Status.OK, transactionId);
                     result.setKeepCallback(true);
-                    currentCallbackContext.sendPluginResult(result);
+                    messageAckCallbackContext.sendPluginResult(result);
                 }
 
             };
@@ -216,7 +218,7 @@ public class PebbleKitCordova extends CordovaPlugin {
          * Register a handler for NACK messages
          */
         if (action.equals("registerReceivedNackHandler")) {
-            currentCallbackContext = callbackContext;
+            messageNackCallbackContext = callbackContext;
             UUID appUUID = UUID.fromString(args.getString(0));
             nackReceiver = new PebbleNackReceiver(appUUID) {
 
@@ -224,7 +226,7 @@ public class PebbleKitCordova extends CordovaPlugin {
                 public void receiveNack(Context context, int transactionId) {
                     PluginResult result = new PluginResult(PluginResult.Status.OK, transactionId);
                     result.setKeepCallback(true);
-                    currentCallbackContext.sendPluginResult(result);
+                    messageNackCallbackContext.sendPluginResult(result);
 
                 }
 
