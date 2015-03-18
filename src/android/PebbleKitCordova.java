@@ -1,6 +1,5 @@
 package com.dcrichards.pebble.pebbleKitCordova;
 
-import android.util.Base64;
 import com.getpebble.android.kit.util.PebbleDictionary;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -8,14 +7,14 @@ import org.apache.cordova.PluginResult;
 
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.PebbleKit.PebbleDataLogReceiver;
+import com.getpebble.android.kit.PebbleKit.PebbleAckReceiver;
+import com.getpebble.android.kit.PebbleKit.PebbleNackReceiver;
 
 import android.content.Context;
-import android.util.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.ByteBuffer;
 import java.util.UUID;
 
 /**
@@ -27,6 +26,8 @@ import java.util.UUID;
 public class PebbleKitCordova extends CordovaPlugin {
 
     private PebbleDataLogReceiver dataLoggingReceiver;
+    private PebbleAckReceiver ackReceiver;
+    private PebbleNackReceiver nackReceiver;
     private CallbackContext currentCallbackContext;
 
     /**
@@ -188,6 +189,48 @@ public class PebbleKitCordova extends CordovaPlugin {
             } else {
                 callbackContext.error("No registered data logging receiver found");
             }
+            return true;
+        }
+
+        /**
+         * Register a handler for ACK messages
+         */
+        if (action.equals("registerReceivedAckHandler")) {
+            currentCallbackContext = callbackContext;
+            UUID appUUID = UUID.fromString(args.getString(0));
+            ackReceiver = new PebbleAckReceiver(appUUID) {
+
+                @Override
+                public void receiveAck(Context context, int transactionId) {
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, transactionId);
+                    result.setKeepCallback(true);
+                    currentCallbackContext.sendPluginResult(result);
+                }
+
+            };
+            PebbleKit.registerReceivedAckHandler(getApplicationContext(), ackReceiver);
+            return true;
+        }
+
+        /**
+         * Register a handler for NACK messages
+         */
+        if (action.equals("registerReceivedNackHandler")) {
+            currentCallbackContext = callbackContext;
+            UUID appUUID = UUID.fromString(args.getString(0));
+            nackReceiver = new PebbleNackReceiver(appUUID) {
+
+                @Override
+                public void receiveNack(Context context, int transactionId) {
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, transactionId);
+                    result.setKeepCallback(true);
+                    currentCallbackContext.sendPluginResult(result);
+
+                }
+
+            };
+
+            PebbleKit.registerReceivedNackHandler(getApplicationContext(), nackReceiver);
             return true;
         }
         

@@ -106,3 +106,25 @@ window.Pebble.unregisterDataLoggingReceiver = function(succ, error) {
 window.Pebble.requestDataLogsForApp = function(UUID, succ, error) {
     cordova.exec(succ, error, 'PebbleKitCordova', 'requestDataLogsForApp', [UUID]);
 };
+
+/**
+ * Register an ACK handler to receieve message ACKs from Pebble
+ *
+ * @param UUID  the UUID of the pebble app
+ * @param succ  the success callback
+ * @param error the error callback
+ */
+window.Pebble.registerReceivedAckHandler = function(UUID, succ, error) {
+    cordova.exec(succ, error, 'PebbleKitCordova', 'registerReceivedAckHandler', [UUID]);
+};
+
+/**
+ * Register a NACK handler to receieve message NACKs from Pebble
+ *
+ * @param UUID  the UUID of the pebble app
+ * @param succ  the success callback
+ * @param error the error callback
+ */
+window.Pebble.registerReceivedNackHandler = function(UUID, succ, error) {
+    cordova.exec(succ, error, 'PebbleKitCordova', 'registerReceivedNackHandler', [UUID]);
+};
