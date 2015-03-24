@@ -35,6 +35,7 @@ The following have been implemented. See [PebbleKit Documentation](http://develo
 * sendDataToPebbleWithTransactionId()
 * registerReceievedAckHandler()
 * registerReceivedNackHandler()
+* registerReceivedDataHandler()
 
 #### Extended API
 

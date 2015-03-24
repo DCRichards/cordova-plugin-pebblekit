@@ -128,3 +128,14 @@ window.Pebble.registerReceivedAckHandler = function(UUID, succ, error) {
 window.Pebble.registerReceivedNackHandler = function(UUID, succ, error) {
     cordova.exec(succ, error, 'PebbleKitCordova', 'registerReceivedNackHandler', [UUID]);
 };
+
+/**
+ * Register a receiver to receive messages sent from the Pebble
+ *
+ * @param UUID  the UUID of the pebble app
+ * @param succ  the success callback
+ * @param error the error callback
+ */
+window.Pebble.registerReceivedDataHandler = function(UUID, succ, error) {
+    cordova.exec(succ, error, 'PebbleKitCordova', 'registerReceivedDataHandler', [UUID]);
+};

@@ -9,6 +9,7 @@ import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.PebbleKit.PebbleDataLogReceiver;
 import com.getpebble.android.kit.PebbleKit.PebbleAckReceiver;
 import com.getpebble.android.kit.PebbleKit.PebbleNackReceiver;
+import com.getpebble.android.kit.PebbleKit.PebbleDataReceiver;
 
 import android.content.Context;
 import org.json.JSONArray;
@@ -28,9 +29,11 @@ public class PebbleKitCordova extends CordovaPlugin {
     private PebbleDataLogReceiver dataLoggingReceiver;
     private PebbleAckReceiver ackReceiver;
     private PebbleNackReceiver nackReceiver;
+    private PebbleDataReceiver dataReceiver;
     private CallbackContext dataLoggingCallbackContext;
     private CallbackContext messageAckCallbackContext;
     private CallbackContext messageNackCallbackContext;
+    private CallbackContext dataHandlerCallbackContext;
 
     /**
      * Constructor
@@ -233,6 +236,26 @@ public class PebbleKitCordova extends CordovaPlugin {
             };
 
             PebbleKit.registerReceivedNackHandler(getApplicationContext(), nackReceiver);
+            return true;
+        }
+
+        if (action.equals("registerReceivedDataHandler")) {
+            dataHandlerCallbackContext = callbackContext;
+            UUID appUUID = UUID.fromString(args.getString(0));
+            dataReceiver = new PebbleKit.PebbleDataReceiver(appUUID) {
+
+                @Override
+                public void receiveData(final Context context, final int transactionId, final PebbleDictionary data) {
+                    //pebble messages must always be ack'd
+                    PebbleKit.sendAckToPebble(getApplicationContext(), transactionId);
+                    PluginResult result = new PluginResult(PluginResult.Status.OK, data.toJsonString());
+                    result.setKeepCallback(true);
+                    dataHandlerCallbackContext.sendPluginResult(result);
+                }
+
+            };
+
+            PebbleKit.registerReceivedDataHandler(getApplicationContext(), dataReceiver);
             return true;
         }
         
