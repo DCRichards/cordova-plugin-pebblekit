@@ -6,9 +6,9 @@ I am aware that there are already a number of similar efforts. However, none I h
 
 ## Installation
 
-Run the following from your Cordova project directory:
+Run the following from your Cordova project directory (where PLUGIN_DIRECTORY is the root of this project)
 
-	cordova plugin add https://github.com/DCRichards/cordova-plugin-pebblekit.git
+	cordova plugin add PLUGIN_DIRECTORY
 		
 ## API
 
