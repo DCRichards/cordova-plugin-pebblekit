@@ -21,11 +21,15 @@ import java.util.UUID;
 /**
  * A Cordova plugin for the PebbleKit Android SDK for the Pebble Smartwatch
  *
+ * For more information and the full API refer to the PebbleKit documentation
+ * at http://developer.getpebble.com/docs/android
+ *
  * @author DCRichards
- * @version 0.1
+ * @version 0.1.0
  */
 public class PebbleKitCordova extends CordovaPlugin {
 
+    // Store listeners so callbacks are routed correctly
     private PebbleDataLogReceiver dataLoggingReceiver;
     private PebbleAckReceiver ackReceiver;
     private PebbleNackReceiver nackReceiver;
@@ -239,6 +243,9 @@ public class PebbleKitCordova extends CordovaPlugin {
             return true;
         }
 
+        /**
+         * Register a handler for recieving data from the Pebble 
+         */
         if (action.equals("registerReceivedDataHandler")) {
             dataHandlerCallbackContext = callbackContext;
             UUID appUUID = UUID.fromString(args.getString(0));
@@ -246,7 +253,7 @@ public class PebbleKitCordova extends CordovaPlugin {
 
                 @Override
                 public void receiveData(final Context context, final int transactionId, final PebbleDictionary data) {
-                    //pebble messages must always be ack'd
+                    // Pebble messages must always be ack'd
                     PebbleKit.sendAckToPebble(getApplicationContext(), transactionId);
                     PluginResult result = new PluginResult(PluginResult.Status.OK, data.toJsonString());
                     result.setKeepCallback(true);
@@ -262,4 +269,3 @@ public class PebbleKitCordova extends CordovaPlugin {
         return false;
     }
 }
-

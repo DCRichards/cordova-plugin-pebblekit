@@ -1,7 +1,9 @@
 /**
- * Interface for PebbleKit Cordova Plugin
+ * JavaScript Interface for PebbleKit Cordova Plugin. For the full PebbleKit 
+ * API see http://developer.getpebble.com/docs/android
  *
  * @author DCRichards
+ * @version 0.1.0
  */
 
 window.Pebble = {};
